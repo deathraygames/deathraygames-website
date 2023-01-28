@@ -1,0 +1,551 @@
+<html>
+<head>
+<link href='http://fonts.googleapis.com/css?family=Numans' rel='stylesheet' type='text/css'>
+<style>
+	body {
+		background: #334;
+		text-align: center;
+		font-family: 'Lucida Grande',Verdana,Arial,sans-serif; 
+		padding: 0;
+		margin: 0;
+	}
+	.main {
+		max-width: 960px;
+		background: #889;
+		margin: 0 auto;
+		text-align: left;
+	}
+	.main:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	
+	.button {
+		display: inline-block;
+		padding: 1em;
+		border-radius: 0.5em;
+		background: rgba(255,255,255,0.1);
+		box-shadow: inset 0 1em 1em rgba(255,255,255,0.25), 
+			0.1em 0.5em 1em rgba(0,0,0,0.25),
+			0 0 0.1em rgba(0,0,0,0.25);
+	}
+	
+	
+	header.main {
+		background: transparent;
+		margin-bottom: -30px;
+		height: 64px;
+		position: relative;
+	}
+
+	header.main .title {
+		display: inline-block;
+		width: 386px;
+		height: 64px;
+		background: no-repeat;
+		background-image: url('http://ludumdare.com/compo/wp-content/themes/ludum/povimg/LDLogo2015.png');
+		color: transparent;
+	}
+	header.main .subtitle {
+		display: block;
+		padding: 0.5em 0 0.5em 1em;
+		color: #f94;
+		font-size: 90%;
+	}
+	header.main .subtitle a {
+		color: #fd4; 
+		display: inline-block;	
+	}
+	
+	header.main .search {
+		position: absolute;
+		top: 50px; right: 1em;
+	}
+	header.main .search input[type="search"] {
+		background: rgba(255,255,255,0.4);
+		border: 0;
+		border-radius: 1em;
+		padding: 0.25em;
+		width: 8em;
+	}
+	header.main .submitSearch {
+		width: 1.2em;
+		height: 1.2em;
+	}
+	
+	.supportLD {
+		display: inline-block;
+		font-size: 80%;
+		font-style: italic;
+		color: #ccf;
+		padding-right: 2em;
+	}
+	
+
+	nav.main {
+		padding-top: 50px;
+		border-bottom: 2px solid #445;
+	}
+	nav.main > ol {
+		display: block;
+		list-style: none;
+		margin: 0;
+		padding: 2em 0 0 0.5em;
+		
+	}
+	nav.main > ol > li {
+		display: block;
+		float: left;
+		margin-right: 0.5em;
+	}
+	nav.main > ol > li > a {
+		display: block;
+		padding: 0.75em;
+		min-height: 5.4em;
+		max-width: 8em;
+		
+		text-align: center;		
+		color: white;
+		background-color: rgba(0,0,0,0.05);
+		text-decoration: none;
+		border: 2px solid transparent;
+		transition: all 0.2s ease-in-out;
+		-webkit-transition: all 0.2s ease-in-out;
+	}
+	nav.main > ol > li > a:hover {
+		background-color: rgba(204,204,221,0.8);
+		color: black;
+	}
+	nav.main > ol > li > a > strong {
+		display: block;
+		margin-bottom: 0.5em;
+		font-family: 'Numans', sans-serif;
+		font-size: 120%;
+	}
+	nav.main > ol > li > a > span {
+		display: block;
+		font-size: 80%;
+		color: #333;
+	}
+	nav.main > ol > li > a.selected {
+		color: black;
+		background-color: rgba(204,204,221,1.0);
+		border: 2px solid #445;
+		border-bottom: 0;
+		margin: 4px 0 -4px 0;
+	}
+	nav.main a.account {
+		background: no-repeat center 90%;
+		background-size: 30px 30px;
+		background-image: url('http://0.gravatar.com/avatar/8266e6e52fe185d057db55021ac7bb86?s=56&d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D56&r=G');
+	}
+	
+	
+	/* === Sections === */
+	
+	section.main {
+		box-sizing: border-box;
+		display: none;
+		padding: 1em 1em 5em 1em;
+		background: rgba(204,204,221,1.0);
+		border-bottom: 2px solid #445;
+		
+	}
+	section.main h1,
+	section.main h2,
+	section.main h3 {
+		font-family: 'Numans', sans-serif;
+	}
+	section.main h1 {
+		
+		margin: 0;
+		padding: 0;
+	}
+	
+	#feed {
+		min-height: 50em;
+		background: #889;
+		
+	}
+	#feed.onlyFeed {
+		background: linear-gradient( to bottom, #ccd, #889, #889, #889, #889);
+	}
+	#feed > ul {
+		display: block;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		width: 70%;
+		float: left;
+	}
+	#feed > ul > li {
+		margin: 1em 0;
+		padding: 1em;
+		min-height: 5em;
+		background: #e5e5e5;
+		border-radius: 1em;
+	}
+	.sidebar {
+		float: right;
+		width: 20%;
+		min-height: 10em;
+		margin-left: 1em;
+	}
+	.nextFeed {
+		text-align: center;
+		display: block;
+		width: 50%;
+		margin: 2em auto;
+		clear: both;
+	}
+	
+	
+	
+	
+	.placeholder {
+		display: inline-block;
+		padding: 1em;
+		margin: 1em;
+		border: dashed 1px rgba(0,0,0,0.2);
+	}
+	
+	.days {
+		display: inline-block;
+		margin: 1em 0;
+		padding: 0;
+		clear: both;
+		box-shadow: 0 0.5em 0.75em rgba(0,0,0,0.5);
+	}
+	.days:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+	.days > li {
+		display: block;
+		float: left;
+		width: 9em;
+		padding: 0.5em;
+		min-height: 9em;
+		background: #fff;
+		margin: 0em;
+		border: solid 3px #999;
+		border-left: 0;
+		
+	}
+	.days > li:first-child {
+		border-left: solid 3px #999;
+	}
+	.days .date {
+		display: block;
+		font-size: 80%;
+		color: #999;
+		margin-bottom: 1em;
+	}
+	
+	.jamList {
+		
+	}
+	.jamList > li {
+		margin: 1em 0;
+	}
+	
+	
+
+	/* === Responsive Styling === */
+	
+	@media (max-width: 960px) {
+		nav.main > ol > li > a {
+			max-width: 6em;
+		}
+		nav.main > ol > li > a > span {
+			font-size: 70%;
+		}
+		#feed > ul,
+		.sidebar {		
+			width: auto;
+			float: none;
+		}
+	}
+	@media (max-width: 810px) {
+		nav.main > ol > li > a {
+			min-height: 3.25em;
+		}
+		nav.main > ol > li > a > span {
+			display: none;
+		}
+		header.main {
+			height: auto;
+			margin-bottom: 0;
+		}
+		header.main .search {		
+			position: static;
+			padding: 1em;
+			color: #ddd;
+		}
+		nav.main {
+			padding-top: 0;
+		}
+		nav.main > ol {
+			padding-top: 1em;
+		}
+	}
+	@media (max-width: 770px) {
+		nav.main > ol {
+			padding: 0.5em 0;
+		}
+		nav.main > ol > li {
+			margin: 0.25em;
+		}
+		nav.main > ol > li > a {
+			min-height: 0;
+			height: auto;
+			max-width: none;
+			font-size: 90%;
+		}
+		nav.main > ol > li > a.selected {
+			border-bottom: 2px solid #445;
+			margin: 0;
+		}
+		nav.main a.account {
+			background-size: 16px 16px;
+		}
+	}
+	
+	
+</style>
+</head>
+<body>
+<header class="main">
+	<a class="title" href="#!">Ludum Dare</a>
+	<span class="subtitle">
+		a global online game jam community
+		<a href="#!">Learn more from the FAQ</a>
+	</span>
+	<div class="search">
+		<a href="#!" class="supportLD">$upport Ludum Dare!</a>
+		Search
+		<input type="search" />
+		<input type="image" class="submitSearch"
+			src="http://ludumdare.com/compo/wp-content/themes/ludum/ld2014/search.png">
+	</div>	
+</header>
+<nav class="main">
+	<ol>
+		<li><a href="#!" class="feed" data-section="feed">
+			<strong>Feed</strong>
+			<span>[103] posts today</span></a></li>
+		<li><a href="#!" class="current" data-section="current">
+			<strong>Next Jam</strong>
+			<span>Ludum Dare 31<br />December 5-8th, 2014</span></a></li>
+		<li><a href="#!" class="last" data-section="last">
+			<strong>Last Jam </strong>
+			<span>October Challenge 2014</span></a></li>
+		<li><a href="#!" class="previous" data-section="previous">
+			<strong>Previous Jams</strong>
+			<span>[28,673] games over 12 years</span></a></li>
+		<li><a href="#!" class="community" data-section="community">
+			<strong>Community</strong>
+			<span>[15,739] developers, 31.1k followers</span></a></li>			
+		<li><a href="#!" class="account" data-section="account">
+			<strong>Account</strong>
+			<span>[yourname]</span></a></li>
+	</ol>	
+</nav>
+
+<main>
+	<section id="current" class="main">
+		<h1>Ludum Dare 31</h1>
+		<p>
+			Rules &amp; Guidance: <a href="#!">Standard LD Rules</a>
+		</p>
+		<p>
+			Theme: To Be Determined -- <a href="#!">Suggest a Theme</a>
+		</p>
+		<ol class="days">
+			<li>
+				<div class="date">Friday<br>December 5th, 2014</div>
+				Compo and Jam Starts
+				<br />[XX:XX ZZZ]
+				<br />[COUNTDOWN]
+			</li>
+			<li>
+				<div class="date">Saturday<br>December 6th, 2014</div>
+			</li>
+			<li>
+				<div class="date">Sunday<br>December 7th, 2014</div>
+				Compo Ends
+				<br />
+				[XX:XX ZZZ]
+			</li>
+			<li>
+				<div class="date">Monday<br>December 8th, 2014</div>
+				Jam Ends
+				<br />[XX:XX ZZZ]
+			</li>
+		</ol>
+		<div class="sidebar">
+			<a href="#!" class="placeholder">Real World Gatherings</a>
+			<a href="#!" class="placeholder">Ludum Deals</a>
+			<a href="#!" class="placeholder">Warmup</a>
+		</div>
+	</section>
+	<section id="last" class="main">
+		<h1>October Challenge 2014</h1>
+		<p>
+			Started: October 1st, 2014
+			<br />
+			Ended: October 31st, 2014
+			<br />
+			Rules &amp; Guidance: <a href="#!">see Announcement Post</a>
+			<br />
+			Entries: 70
+		</p>
+		<a href="#!" class="placeholder">Announcement Post</a>
+		<a href="#!" class="placeholder">Submit</a>
+		<a href="#!" class="placeholder">View All Entries</a>
+		<a href="#!" class="placeholder">View Your Entry</a>
+	</section>
+	<section id="previous" class="main">
+		<h1>Previous Jams</h1>
+		<ul class="jamList">
+			<li>
+				Ludum Dare 30 -- August 2014
+				<ul>
+					<li><a href="#!">Your Entry</a></li>
+					<li><a href="#!">Winners</a></li>
+					<li><a href="#!">Top Compo</a> (out of xxxx entries)</li>
+					<li><a href="#!">Top Jam</a> (out of xxxx entries)</li>
+					<li><a href="#!">Warmup</a></li>
+					<li><a href="#!">Posts</a></li>
+				</ul>
+			</li>
+			<li>
+				Ludum Dare 29 -- April 2014
+				<ul>
+					<li><a href="#!">Your Entry</a></li>
+					<li><a href="#!">Winners</a></li>
+					<li><a href="#!">Top Compo</a> (out of xxxx entries)</li>
+					<li><a href="#!">Top Jam</a> (out of xxxx entries)</li>
+					<li><a href="#!">Warmup</a></li>
+					<li><a href="#!">Posts</a></li>
+				</ul>
+			</li>
+			<li>
+				Ludum Dare 28 -- December 2013
+				<ul>
+					<li><a href="#!">Your Entry</a></li>
+					<li><a href="#!">Winners</a></li>
+					<li><a href="#!">Top Compo</a> (out of xxxx entries)</li>
+					<li><a href="#!">Top Jam</a> (out of xxxx entries)</li>
+					<li><a href="#!">Warmup</a></li>
+					<li><a href="#!">Posts</a></li>
+				</ul>
+			</li>
+			<li>
+				Ludum Dare 27 -- August 2013
+				<ul>
+					<li><a href="#!">Your Entry</a></li>
+					<li><a href="#!">Winners</a></li>
+					<li><a href="#!">Top Compo</a> (out of xxxx entries)</li>
+					<li><a href="#!">Top Jam</a> (out of xxxx entries)</li>
+					<li><a href="#!">Warmup</a></li>
+					<li><a href="#!">Posts</a></li>
+				</ul>
+			</li>
+			<li>
+				Ludum Dare 26 -- April 2013
+				<ul>
+					<li><a href="#!">Your Entry</a></li>
+					<li><a href="#!">Winners</a></li>
+					<li><a href="#!">Top Compo</a> (out of xxxx entries)</li>
+					<li><a href="#!">Top Jam</a> (out of xxxx entries)</li>
+					<li><a href="#!">Warmup</a></li>
+					<li><a href="#!">Posts</a></li>
+				</ul>
+			</li>
+		</ul>
+		<a href="#!" class="button">Load More</a>	
+	</section>
+	<section id="community" class="main">
+		<h1>Community</h1>
+		<div class="placeholder">[LINKS for mailing list, IRC, Reddit, Twitter]</div>
+		<div class="placeholder">[TWITTER FEED]</div>
+		<div class="placeholder">[TWITCH STREAMS]</div>
+		<div class="placeholder">[STEAM INFO]</div>
+		<div class="placeholder">[PATREON INFO]</div>
+	</section>
+	<section id="account" class="main">
+		<h1>Your Account</h1>
+		<a href="http://ludumdare.com/compo/wp-admin/index.php" class="placeholder">WordPress Dashboard</a>
+		<a href="http://ludumdare.com/compo/wp-admin/post-new.php" class="placeholder">Make a New Post</a>
+		<a href="#!" class="placeholder">Log Out</a>
+		<h2>Your Entries</h2>
+		<ol>
+			<li><a href="#!">[GAME]</a></li>
+			<li><a href="#!">[GAME]</a></li>
+			<li><a href="#!">[GAME]</a></li>
+			<li><a href="#!">[GAME]</a></li>
+			<li><a href="#!">[GAME]</a></li>
+		</ol>
+	</section>
+	<section id="feed" class="main">
+		<h1>Feed</h1>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<a href="#!" class="button nextFeed">Older Feed Posts</a>
+		</ul>
+		<div class="sidebar">
+			[SIDEBAR STUFF]
+		</div>
+		
+	</section>	
+</main>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+	jQuery(document).ready(function($){
+		var $sections = $('section.main');
+		var $mainNav = $('nav.main');
+		var $mainNavLinks = $mainNav.find('a');
+		
+		function selectSection (sectionName) {
+			console.log("Selecting section " + sectionName);
+			var $section = $('#' + sectionName);
+			
+			
+			if (sectionName == "feed") {
+				$section.addClass("onlyFeed");
+				$sections.not('#feed').slideUp();
+			} else {
+				$('#feed').removeClass("onlyFeed");
+				$sections.not('#feed').hide();
+			}
+			$section.slideDown();
+			$mainNavLinks.removeClass("selected");
+			$mainNavLinks.filter('.' + sectionName).addClass("selected");
+		}
+		
+		$mainNavLinks.click(function(e){
+			var $this = $(this);
+			selectSection($this.data('section'));
+		});
+		
+		selectSection("feed");
+	});
+</script>
+
+</body>
+</html>
