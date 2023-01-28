@@ -1,0 +1,253 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+        <title>Gamma World Character Generator</title> 
+        <link rel="stylesheet" href="gamma_style.css" type="text/css" media="all" /> <!---screen--->
+        <link rel="stylesheet" href="gamma_print_override.css" type="text/css" media="print" />
+        <link rel="stylesheet" href="http://deathraygames.com/css/jquery.jnotify-alt.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>     
+	 <script language="JavaScript" src="http://deathraygames.com/js/jquery.jnotify.js">
+	  <script language="JavaScript">;</script> <!--- something wrong with jnotify ; this is required --->
+	 <script language="JavaScript" SRC="http://deathraygames.com/js/cookies.js"></script>
+        <script language="JavaScript" SRC="gammaworld_generator.js"></script>
+       
+        
+    </head> 
+    <body>
+	<div id="intro">
+		 <h1>Gamma World Character Generator</h1>
+		
+		<ul class="mainmenu"> 
+			<li><a href="#" class="opentab1 tabunselected">Create</a></li>
+			<li><a href="#" class="opentab2 tabunselected">Edit</a></li>
+			<li><a href="#" class="opentab3 tabunselected">Print</a></li>
+			<li class="bigger"><a href="#" class="opentab4 tabunselected">Save | Load</a></li>
+			<li class="bigger"><a href="#" class="opentab5 tabunselected">Import | Export</a></li>
+		</ul>
+		
+		<form name="CreateCharacterForm" id="tab1" class="tab">
+			<h2>Create New Character</h2>
+			<label for="name">Name:</label><input type="text" name="name" id="name" />
+			<br />
+			<label for="level">Level:</label>
+			<select name="level" id="level" size="1">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+			</select>
+			<br />
+			<input class="generatebutton" type="button" value="Generate Random Character"> 
+		</form>
+		 
+		
+		<div id="tab2" class="tab">
+			<h2>Edit Character</h2>
+			<label for="editname">Name:</label><input type="text" name="name" id="editname" /> 
+			<button id="editnamebutton" type="button">Change Name</button>
+			<br />
+			<label for="editlevel">Level:</label>
+			<select name="level" id="editlevel" size="1">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+				<option value="5">5</option>
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+			</select>
+			<button id="editlevelbutton" type="button">Change Level</button>
+			<button class="character-edit" id="levelupbutton" type="button">Level Up</button>
+			<br />
+			<button class="character-edit" id="rerolloriginbutton" type="button">Re-roll Origin &amp; Abilities</button>
+			<br />
+			<button class="character-edit" id="rerollskillbutton" type="button">Re-roll Skills</button>
+			<h2>Edit Gear</h2>
+			<button class="character-edit" id="rerollgearbutton" type="button">Re-roll Gear</button>
+			<br />
+			<button class="character-edit" id="kitswapbutton" type="button">Swap Explorer's Kit for another gear roll</button>
+		</div>
+		
+		
+		
+		<div id="tab3" class="tab">
+			<h2>Print</h2>
+			<button class="character-edit" id="printbutton" type="button">Print Character Sheet</button>
+		</div>
+		
+		
+		
+		<div id="tab4" class="tab">
+			<h2>Save</h2>
+			<p>
+				Characters can be saved to your computer using your browser's cookies. 
+				These saved characters will only be available if you use the same computer and the same browser program.
+			</p>
+			<button class="character-edit" id="savebutton" type="button">Save Character to Cookie</button>
+			<br />
+			<h2>Load</h2>
+			<p>Saved character slots are shown below. Click on the appropriate button to load or delete a character.
+			</p>
+			<ul id="characterslots"><li>None</li></ul>
+			
+			<br class="clearboth" />
+		</div>
+		
+		
+		
+		
+		<div id="tab5" class="tab">
+
+			<h2>Export</h2>
+			<p>
+				You may convert your character into a special string of data which can later be loaded into a character sheet. You can copy this string from below and send it in an email or save it in a text file on your computer.
+			</p>
+			<button class="character-edit" id="exportbutton" type="button">Export Character</button>
+			<br /><textarea id="exporttextarea" rows="3" cols="70"></textarea>
+			<br />
+			<p>
+				Characters can also be saved and re-loaded by using a unique link. This can make it easy for you to send your character to a friend. However due to size restrictions, this link will not include custom gear.
+			</p>
+			<button class="character-edit" id="getlinkbutton" type="button">Get Character Link</button>
+			<br /><textarea id="linktextarea" rows="2" cols="70"></textarea>
+			<h2>Import</h2>
+			<p>
+				Characters can be imported by using a special string of data that is generated when you export a character. Paste the string in the field below and click "Import".
+			</p>
+			<textarea id="importtextarea" rows="3" cols="70"></textarea>
+			<br />
+			<button id="importbutton" type="button">Import Character</button>
+		</div>
+		
+		<br class="clearboth">
+	</div>
+        
+        
+        
+        
+	<div id="charactersheet">
+		<h1 id="sheettitle">Gamma World</h1>
+		
+		<div class="leftcolumn">
+			<div class="name section">
+				<h2>Character</h2>
+				<label>Name</label><div class="score" id="name-content"></div>
+				<label>Level</label>
+				<div class="score" id="level-content"></div>
+			</div>
+			<div class="origins section">
+				<h2>Origins</h2>
+				<div id="origin-content"></div>
+				<h2>Origin Traits</h2>
+				<div id="origintraits-content"></div>
+				<h2>Powers</h2>
+				<div id="powers-content"></div>
+			</div>
+			<div class="ability section">
+				<h2>Ability Scores</h2>
+				<div id="ability-content"></div>
+			</div>	
+			<div class="skills section">
+				<h2>Skills</h2>
+				<div id="skills-content"></div>
+			</div>
+		</div>
+		<div class="rightcolumn">
+			<div class="health section">
+				<h2>HitPoints</h2>
+				<label>Maximum</label>
+				<div class="score" id="hp-content"></div>
+				<label>Bloodied</label>
+				<div class="score" id="bloodied-content"></div>
+				<label>Current</label>
+				<div class="score" id="current-hp"></div>
+				<h2>Speed</h2>
+				<div id="speed-content"></div>
+			</div>
+			<div class="defense section">
+				<h2>Defenses</h2>
+				<label>AC</label>
+				<span class="score" id="ac-content"></span>
+				<span class="mods" id="ac-mod-content" title="10 + level + dex mod + armor + other mods"></span>
+				<br />
+				<label>Fortitude</label>
+				<span class="score" id="fortitude-content"></span>
+				<span class="mods" id="fortitude-mod-content" title="10 + level + higher of str or con mod + origin bonus + other mods"></span>
+				<br />
+				<label>Reflex</label> 
+				<span class="score" id="reflex-content"></span>
+				<span class="mods" id="reflex-mod-content" title="10 + level + higher of dex or int mod + origin bonus + other mods"></span>
+				<br />
+				<label>Will</label>
+				<span class="score" id="will-content"></span>
+				<span class="mods" id="will-mod-content" title="10 + level + higher of wis or cha mod + origin bonus + other mods"></span>
+				
+			</div>
+			<div class="attacks section">
+				<h2>Attacks</h2>
+				<label>Initiative</label>
+				<span class="score" id="init-content"></span>
+				<div id="attacks-content"></div>
+			</div>	
+			<div class="gear section">
+				<h2>Gear</h2>
+				<div id="gear-content"></div>
+			</div>
+		</div>		
+		<br class="clearboth">
+		<div id="sheetfooter">
+			Gamma World character generated at deathraygames.com
+		</div> 
+	</div>
+         
+        <div id="todo">
+        <p>This is an alpha version and has some bugs and limitations.</p>
+        <p>If you'd like to help out with this Creative Commons effort or have feedback, please contact luke at deathraygames dot com. Of particular value are insights from Gamma World players on how to make this tool more useful!</p>
+        Development List to beta:
+        <ul>
+		<li>Adjust hitpoints by level (hp stay constant)</li>
+		<li>Level 1 power list</li>
+		<li>Attacks</li>
+		<li>Non-stat level 1 abilities/notes</li> 
+	</ul>
+	Other ideas:
+	<ul>
+		<li>Allow selecting of weapons/armor</li>
+		<li>Random Personality generation</li>
+		<li>Let player scrap items and add in custom items</li>
+		<li>Homebrew: Add ability to make edits to abilities and skills</li>
+		<li>Allow for multiple printing style sheets</li>
+		<li>Homebrew: add additional origins, weapons, etc.</li>
+        </ul>
+
+        </div>
+        
+        <div id="footer">
+        
+		<p>
+			Gamma World Character Generator version alpha-0.6
+			<br />for Dungeons and Dragons 4th edition (D&amp;D 4e)
+		</p>
+		<p>
+			Created by <a href="http://deathraygames.com/tabletop-roleplaying/">Luke of Deathray Games</a>; 
+			inspired by <a href="http://html5.holycow.com/gammaworld/">Joe Fulgham's generator</a>
+			<br />
+			Design &amp; Coding Copyright 2010
+			<a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons (Attribution Non-Commercial Sharealike)</a>
+		</p>
+		<p>
+			"<a href="http://www.wizards.com/dnd/Product.aspx?x=dnd/products/dndacc/254600000">Gamma World</a>" is a registered trademark of <a href="http://www.wizards.com/">Wizards of the Coast</a>
+		</p>
+        </div> 
+    </body> 
+</html> 

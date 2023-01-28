@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Gamma World Character Generator</title>
+        <link rel="stylesheet" href="puck_style.css" type="text/css" media="screen" />
+        <link rel="shortcut icon" href="http://www.holycow.com/wp-content/themes/holycow/images/favicon.png" type="image/png" /> 
+        <script language="JavaScript">
+            /*
+             * Gamma World Character Generator
+             * by Joe Fulgham
+             * http://www.holycow.com/joe/
+             *
+             * Creative Commons (Attribution Non-Commercial Sharealike) 2010
+             *
+             */
+            function dice_roll(die, dice) {
+                // Rolls (dice)d(die) and adds them together
+                var roll = 0;
+                for (loop=0; loop < dice; loop++) {
+                    roll = roll + Math.round(Math.random() * die) % die + 1;
+                }
+                return(roll);
+            }
+            
+            function originname(roll) {
+                // Rolls a random origin.  Does not check for duplicate rolls for Enginered Human.
+                switch (roll) {
+                    case 1: origin="Android"; break;
+                    case 2: origin="Cockroach"; break;
+                    case 3: origin="Doppelganger"; break;
+                    case 4: origin="Electrokinetic"; break;
+                    case 5: origin="Empath"; break;
+                    case 6: origin="Felinoid"; break;
+                    case 7: origin="Giant"; break;
+                    case 8: origin="Gravity Controller"; break;
+                    case 9: origin="Hawkoid"; break;
+                    case 10: origin="Hypercognitive"; break;
+                    case 11: origin="Mind Breaker"; break;
+                    case 12: origin="Mind Coercer"; break;
+                    case 13: origin="Plant"; break;
+                    case 14: origin="Pyrokinetic"; break;
+                    case 15: origin="Radioactive"; break;
+                    case 16: origin="Rat Swarm"; break;
+                    case 17: origin="Seismic"; break;
+                    case 18: origin="Speedster"; break;
+                    case 19: origin="Telekinetic"; break;
+                    case 20: origin="Yeti"; break;
+                }
+                return(origin);
+            }
+
+            function changeText(sectionId,sectionText){
+                // Might use this to change specific areas.
+                // Will it parse variables pass through?  Need to learn more.
+                document.getElementById(sectionId).innerHTML = sectionText;
+            }
+
+            function statBonus(statValue) {
+                // Determines bonus from a given stat, including negatives.
+                statValue = parseInt((statValue-10)/2);
+                return(statValue);
+            }
+
+            function getStats(Primary,Secondary) {
+                // Rolls all stats sets skills = level
+                // then sets stats based on Origins (Primary 18, Secondary 16)
+                // If both origins have the same bonus, stat becomes 20
+                str = dice_roll(6,3);
+                ite = dice_roll(6,3);
+                dex = dice_roll(6,3);
+                con = dice_roll(6,3);
+                cha = dice_roll(6,3);
+                wis = dice_roll(6,3);
+                var skillAcrobatics = 1;
+                var skillAthletics = 1;
+                var skillConspiracy = 1;
+                var skillInsight = 1;
+                var skillInteraction = 1;
+                var skillMechanics = 1;
+                var skillNature = 1;
+                var skillPerception = 1;
+                var skillScience = 1;
+                var skillStealth = 1;
+                var defenseFort = 11;
+                var defenseRef = 11;
+                var defenseWill = 11;
+                var hitPoints = 12;
+                var moveSpeed = 6;
+                var initiativeBonus = 1;
+                var attrChange='';
+
+                // Can I combine these two switches?  Probably.
+                switch (Primary) {
+                    case 1: ite=18; attrChange='ite'; overCharge='Dark'; skillScience+=4; defenseFort+=2; break;
+                    case 2: con=18; attrChange='con'; overCharge='Bio'; skillMechanics+=4; defenseRef+=2; break;
+                    case 3: ite=18; attrChange='ite'; overCharge='Dark'; skillConspiracy+=4; defenseRef+=2; break;
+                    case 4: wis=18; attrChange='wis'; overCharge='Dark'; skillMechanics+=4; defenseRef+=2; break;
+                    case 5: cha=18; attrChange='cha'; overCharge='Psi'; skillInsight+=4; break;
+                    case 6: dex=18; attrChange='dex'; overCharge='Bio'; skillStealth+=4; defenseRef+=2; break;
+                    case 7: str=18; attrChange='str'; overCharge='Bio'; skillAthletics+=4; defenseFort+=2; break;
+                    case 8: con=18; attrChange='con'; overCharge='Dark'; skillAthletics+=4; defenseRef+=2; break;
+                    case 9: wis=18; attrChange='wis'; overCharge='Bio'; skillPerception+=4; break;
+                    case 10: wis=18; attrChange='wis'; overCharge='Psi'; skillInsight+=4;  defenseRef+=2;break;
+                    case 11: cha=18; attrChange='cha'; overCharge='Psi'; skillInteraction+=4; defenseWill+=2; break;
+                    case 12: cha=18; attrChange='cha'; overCharge='Psi'; skillInteraction+=4; defenseWill+=2; break;
+                    case 13: con=18; attrChange='con'; overCharge='Bio'; skillNature+=4; defenseFort+=2; break;
+                    case 14: wis=18; attrChange='wis'; overCharge='Psi'; skillInteraction+=4; break;
+                    case 15: con=18; attrChange='con'; overCharge='Dark'; skillScience+=4; defenseFort+=2; break;
+                    case 16: dex=18; attrChange='dex'; overCharge='Bio'; skillStealth+=4; break;
+                    case 17: str=18; attrChange='str'; overCharge='Dark'; skillAthletics+=4; moveSpeed+=-1; break;
+                    case 18: dex=18; attrChange='dex'; overCharge='Psi'; skillAcrobatics+=4; defenseRef+=2; break;
+                    case 19: ite=18; attrChange='ite'; overCharge='Psi'; skillMechanics+=4; break;
+                    case 20: str=18; attrChange='str'; overCharge='Bio'; skillNature+=4; break;
+                }
+
+                switch (Secondary) {
+                    case 1: ite=16;skillScience+=4; if(attrChange=='ite') {ite=20;} defenseFort+=2; break;
+                    case 2: con=16; skillMechanics+=4; if(attrChange=='con') {con=20;} defenseRef+=2; break;
+                    case 3: ite=16; skillConspiracy+=4; if(attrChange=='ite') {ite=20;} defenseRef+=2; break;
+                    case 4: wis=16; skillMechanics+=4; if(attrChange=='wis') {wis=20;} defenseRef+=2; break;
+                    case 5: cha=16; skillInsight+=4; if(attrChange=='cha') {cha=20;} break;
+                    case 6: dex=16; skillStealth+=4; if(attrChange=='dex') {dex=20;} defenseRef+=2; break;
+                    case 7: str=16; skillAthletics+=4; if(attrChange=='str') {str=20;} defenseFort+=2; break;
+                    case 8: con=16; skillAthletics+=4; if(attrChange=='con') {con=20;} defenseRef+=2; break;
+                    case 9: wis=16; skillPerception+=4; if(attrChange=='wis') {wis=20;} break;
+                    case 10: wis=16; skillInsight+=4; if(attrChange=='wis') {wis=20;} defenseRef+=2; break;
+                    case 11: cha=16; skillInteraction+=4; if(attrChange=='cha') {cha=20;} defenseWill+=2; break;
+                    case 12: cha=16; skillInteraction+=4; if(attrChange=='cha') {cha=20;} defenseWill+=2; break;
+                    case 13: con=16; skillNature+=4; if(attrChange=='con') {con=20;} defenseFort+=2; break;
+                    case 14: wis=16; skillInteraction+=4; if(attrChange=='wis') {wis=20;} break;
+                    case 15: con=16; skillScience+=4; if(attrChange=='con') {con=20;} defenseFort+=2; break;
+                    case 16: dex=16; skillStealth+=4; if(attrChange=='dex') {dex=20;} break;
+                    case 17: str=16; skillAthletics+=4; if(attrChange=='str') {str=20;} moveSpeed+=-1; break;
+                    case 18: dex=16; skillAcrobatics+=4; if(attrChange=='dex') {dex=20;} defenseRef+=2; break;
+                    case 19: ite=16; skillMechanics+=4; if(attrChange=='ite') {ite=20;} defenseRef+=2; break;
+                    case 20: str=16; skillNature+=4; if(attrChange=='str') {str=20;} break;
+                    case 21: ite=16; skillScience+=4; skillInteraction+=4; if(attrChange=='ite') {ite=20;} defenseRef+=1; defenseFort+=1; defenseWill+=1; break;
+                }
+
+                // Add stat bonuses to skills
+                skillAcrobatics+=statBonus(dex);
+                skillAthletics+=statBonus(str);
+                skillConspiracy+=statBonus(ite);
+                skillInsight+=statBonus(wis);
+                skillInteraction+=statBonus(cha);
+                skillMechanics+=statBonus(ite);
+                skillNature+=statBonus(wis);
+                skillPerception+=statBonus(wis);
+                skillScience+=statBonus(ite);
+                skillStealth+=statBonus(dex);
+
+                // One random skill gets a +4 bonus
+                randomSkill = dice_roll(10,1);
+                switch(randomSkill) {
+                    case 1: skillAcrobatics+=4; break;
+                    case 2: skillAthletics+=4; break;
+                    case 3: skillConspiracy+=4; break;
+                    case 4: skillInsight+=4; break;
+                    case 5: skillInteraction+=4; break;
+                    case 6: skillMechanics+=4; break;
+                    case 7: skillNature+=4; break;
+                    case 8: skillPerception+=4; break;
+                    case 9: skillScience+=4; break;
+                    case 10: skillStealth+=4; break;
+                }
+
+                // Add stat bonus (highest stat of the two) to saves.
+                if(con>str) { defenseFort+=statBonus(con); } else { defenseFort+=statBonus(str)}
+                if(dex>ite) { defenseRef+=statBonus(dex); } else { defenseRef+=statBonus(ite)}
+                if(wis>cha) { defenseWill+=statBonus(wis); } else { defenseWill+-statBonus(cha)}
+
+                // Hit points = base + con
+                hitPoints+=con;
+
+                // Create character output string
+                
+                statsOut='<span class="lefty">STR: </span><span class="lefty">' + str + '</span><br class="clearboth" /><span class="lefty">CON: </span><span class="lefty">' + con + '</span><br /><span class="lefty">INT: </span><span class="lefty">' + ite + '</span><br /><span class="lefty">DEX: </span><span class="lefty">' + dex + '</span><br /><span class="lefty">WIS: </span><span class="lefty">' + wis + '</span><br /><span class="lefty">CHA: </span><span class="lefty">' + cha + '</span>';
+                statsOut+='<br /><br />Hit Points: ' + hitPoints + '<br />+2 to ' + overCharge + ' overcharge.';
+                statsOut+='<p class=\"small\">Note: Engineered Humans get +2 to all overcharge but they are Secondary origins while the rules say only your Primary affects your overcharge bonus.  Checking out what to do so for now I\'ve left it off.</p>';
+                statsOut+='Fortitude: ' + defenseFort + ' &nbsp;&nbsp;&nbsp; Reflex: ' + defenseRef + ' &nbsp;&nbsp;&nbsp; Will:' + defenseWill;
+                statsOut+='<h2>Skills</h2><p>Acrobatics: ' + skillAcrobatics + '<br />Athletics: ' + skillAthletics + '<br />Conspiracy: ' + skillConspiracy + '<br />Insight: ' + skillInsight;
+                statsOut+='<br />Interaction: ' + skillInteraction + '<br />Mechanics: ' + skillMechanics + '<br />Nature: ' + skillNature + '<br />Perception: ' + skillPerception;
+                statsOut+='<br />Science: ' + skillScience + '<br />Stealth: ' + skillStealth + '</p>';
+
+                
+                return(statsOut);
+            }
+
+            function getGear() {
+                var gearOut = '<h2>Gear</h2><p>One armor (your choice)<br />One melee weapon (your choice)<br />One ranged weapon (your choice)<br />Explorer\'s Kit (Backpack, Bedroll, Canteen, Flint and steel, 10 days Rations (trail), 100 ft Rope.)</p>';
+                // Roll gear - 1d4+1 rolls on the gear table.
+                gearRolls = dice_roll(4,1) + 1;
+                gearOut+='<p>You received ' + gearRolls + ' starting gear rolls:<br />';
+                for (gearLoop=0; gearLoop < gearRolls; gearLoop++) {
+                    gearResult = dice_roll(20,1);
+                    gearOut+='Gear #' + (gearLoop+1) + ': Rolled a ' + gearResult + ': ';
+
+                    switch(gearResult) {
+                        case 1: gearOut+='Ancient Junk: '+ AncientJunk() + ' & ' + AncientJunk() + '<br />'; break;
+                        case 2: gearOut+='Climber\'s Kit<br />'; break;
+                        case 3: gearOut+='Canoe<br />'; break;
+                        case 4: gearOut+='Keelboat<br />'; break;
+                        case 5: gearOut+='Lantern (8 hours of lamp oil)<br />'; break;
+                        case 6: gearOut+='Draft horse (no wagon)<br />'; break;
+                        case 7: gearOut+='Riding horse<br />'; break;
+                        case 8: gearOut+='Tent<br />'; break;
+                        case 9: gearOut+='Wagon<br />'; break;
+                        case 10: gearOut+='Binoculars<br />'; break;
+                        case 11: gearOut+='Laptop computer<br />'; break;
+                        case 12: gearOut+='Duct tape<br />'; break;
+                        case 13: gearOut+='Heavy flashlight<br />'; break;
+                        case 14: gearOut+='Fuel, 5 gallons<br />'; break;
+                        case 15: gearOut+='Generator (8 hours of fuel)<br />'; break;
+                        case 16: gearOut+='Night-vision goggles<br />'; break;
+                        case 17: gearOut+='Radio cell phone<br />'; break;
+                        case 18: gearOut+='Pickup truck<br />'; break;
+                        case 19: gearOut+='Water purifier (water not included)<br />'; break;
+                        case 20: gearOut+='+2 Rolled Items<br />'; gearRolls+=2; break;
+                        default: gearOut+='something broke'; break;
+                    }
+                }
+                return(gearOut);
+            }
+
+            function AncientJunk() {
+                var AncientJunkChart = new Array("15-inch computer monitor","20-lb. dumbell","Punching bag","Bike helmet","Day-glow vest","Exercise treadmill","Exercise treadmill","Cell phone","Ashtray","Electric blender","Hearing aid","Coloring book","Camera flash cube","Portable table saw","Toy gun","Vacuum cleaner","Remote control","Tin of sardines","Inflatable kiddie pool","Nose-hair clipper","Electric razor","Green plastic soldiers","Board game","Bag of hard candy","Kaleidoscope","Slide projector","Toy dump truck","Corporate logo T-shirt","Jug of maple syrup","Earphones","Mini fridge","Pack of antacide tablets","Taxi mileage meter","Umbrella","Wecam","Wireless keyboard","Bottle of nail polish","Swim goggles","Deck of cards","LED light bullb","Laptop computer","Electric toothbrush","Garage-door opener","Bottle of hand lotion","Butane lighter","Bike lock","Golf club (9 iron or your choice)","Foosball table","Interface cable","Digital thermometer","Pgoo stick","Stapler","Tennis racket","Plastic water bottle","Camera lens","Cordless drill","Cell-phone earpiece","String of holiday lights","Water-bubble level","Croquet set","Sci-fi serial on DVD","Radar detector","Wristwatch","Wireless router","Saxophone","Violin","Glue (white)","DVD player","Box of cake mix","Eyeglasses","Gas grill","Printer/scanner","Skateboard","Socket wrench set","Individually wrapped creme-filled yellow sponge cake","Cellophane tape","Electric blanket","Electric fan","Inflatable life vest","Nail clippers","Baby car seat","Tweezers and nail file","Windshield scraper","Cordless mouse","Digital camera","Clock radio","Subwoofer","Tire-pressure gauge","Exercise bike","Construction hazard light","Digital photo frame","Pack of crayons","Smoke detector","8 GB RAM DISK","air compressor","Camcorder","Car stereo","Ceiling fan","Ammo","Stocking cap","Weed whacker");
+                AncientJunkResult = AncientJunkChart[(dice_roll(100,1)-1)]
+                return(AncientJunkResult)
+            }
+
+            function generateChar() {
+                // Main character generating function.
+                // Roll Primary Origin and get its name.
+                Primary = dice_roll(20,1);
+                PrimaryOrigin = originname(Primary);
+                // Roll Secondary Origin and get its name.
+                Secondary = dice_roll(20,1);
+                SecondaryOrigin = originname(Secondary);
+                // If both origins are the same, then Secondary is Engineered Human
+                if(PrimaryOrigin==SecondaryOrigin) {
+                    SecondaryOrigin="Engineered Human";
+                    Secondary=21;
+                }
+
+                // Ouput character.  Just one hunk of text right now.
+                // In the future I may make a character sheet where specific entries get changed instead.
+                // Learn a way to "export" character for re-import?
+                document.getElementById('character').innerHTML = '<h2>' + PrimaryOrigin + ' / ' + SecondaryOrigin + '</h2>' + getStats(Primary,Secondary) + getGear();
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Gamma World Character Generator</h1>
+        <p>This generates a Level 1 character.  Level bonus to skills/defenses is included.</p>
+        <form name="Roll">
+            <input type="button" value="Generate Character" OnClick="generateChar();">
+        </form>
+        <p id="character">Press Generate to create your Gamma World Character!</p>
+        <br />
+        <div id="todo">To do:<ul><li>Non-stat level 1 abilities/notes.</li>
+        <li>Level 1 power list.</li>
+        <li>A way to export/save rolls for later plugging back into the sheet</li>
+        <li>Option to give up the Explorer's Kit for an additional item roll</li>
+        <li>NPC Random Personality generation (pg 64)</li></ul>
+        </div>
+        <div id="footer"><a href="http://www.wizards.com/dnd/Product.aspx?x=dnd/products/dndacc/254600000">Gamma World</a> Character Generator by <a href="http://www.holycow.com/joe/">Joe Fulgham</a><br />
+            Yes, I know my URL says "HTML5" but I realized I needed better Javascript skills before diving into that.<br />
+            In the future I may change this to a formatted and printable character sheet.  If any Javascript experts have tips or advice I'm more than welcome to hear them!  Email me at puck at holycow dot com.<br />
+            Copyright 2010 Creative Commons (Attribution Non-Commercial Sharealike)
+        </div>
+    </body>
+</html>

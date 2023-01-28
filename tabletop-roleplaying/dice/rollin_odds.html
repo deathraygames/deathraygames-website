@@ -1,0 +1,165 @@
+<html>
+<head>
+<title>Rollin' Rollin' Rollin'</title>
+
+<style type="text/css">
+
+	#rollform { width: 40%; margin: 2em auto; padding: 2em;
+		float: left;
+		background: white; 
+		}
+	#rollform LI { padding: 0.5em }
+	#rollform INPUT { background-color: #ffffbb; border: solid 1px #666; }
+
+	#summaryoutcome { width: 40%; border: solid 1px blue; padding: 2em;
+		float: left;
+		background: #bbbbff; }
+	#summaryoutcome H1 {
+		font-size: 110%; margin: 0.1em; }
+
+</style>
+
+<script type="text/javascript">
+
+
+	function RefreshValues () {
+		// get input values
+		// check for validity; if not valid, return -1
+		// use them to recalc values in spans
+		//
+		return true;
+	}
+
+	function StartRolls () {
+
+
+		if (RefreshValues()) {
+			
+			var OutcomeElt = document.getElementById("summaryoutcome");
+			var outputHTML = "<hr>";
+			var r = document.rollparams;
+			
+			var iterations = 		r.iterations.value;
+			var sides = 			r.s.value;
+			var dice = 			r.n.value;
+			var success_threshold = 	r.success.value;
+			var reroll_threshold = 	r.reroll.value;
+			var botch_threshold = 	r.botch.value;
+			
+			var i_successes = 0;
+			var counts = new Array();
+			
+
+			for (var i=0; i<iterations; i++)
+			{
+				i_successes = 0;
+				for (var n=1; n<=dice; n++)
+				{
+					i_successes += GetSingleRollSuccesses(
+								sides, 
+								success_threshold, 
+								botch_threshold,
+								reroll_threshold
+								);
+				}
+				//OutcomeElt.innerHTML += "<br>"+i_successes;
+				
+				var countIndexName = i_successes + "";
+				if (counts[countIndexName] > 0)
+					counts[countIndexName]++;
+				else counts[countIndexName] = 1;
+				
+				
+				
+			}
+			
+			outputHTML += "<br><h1>"+ i +" iterations complete</h1>";
+			outputHTML += "<br>" + dice + "d" + sides;
+			outputHTML += "; st=" + success_threshold + ", rrt=" + reroll_threshold + ", bt=" + botch_threshold;
+			outputHTML += "<ul>";
+			
+			
+			for (var x in counts)
+			{
+				 outputHTML += "<li>"+x+" Successes: " + counts[x] + " = " + (counts[x]/i)*100 + "%</li>";
+			}
+			
+			outputHTML += "</ul>";
+			
+			OutcomeElt.innerHTML = outputHTML + OutcomeElt.innerHTML;
+		}
+		return false;
+	}
+	
+	function GetSingleRollSuccesses (s, st, bt, rrt)
+	{
+		var r = Roll(s);
+		var successes = 0;
+		if (r >= st) successes++;
+		if (r <= bt) successes--;
+		if (r >= rrt) successes += GetSingleRollSuccesses(s, st, bt, rrt);
+		return successes;
+	}
+	
+
+	function Roll (s)
+	{
+		var r = Math.floor(Math.random() * s) + 1;
+		if (r > s) alert ("Roll of "+ r);
+		return ( r );
+	}
+	
+	function test ()
+	{
+		for (var n=1; n<=100; n++)
+		{
+			document.getElementById("summaryoutcome").innerHTML += ", " + Roll(10);
+		}
+	}
+
+
+</script>
+
+
+</head>
+<body style="background: black;" onload="test()">
+
+
+<form name="rollparams" id="rollform" onsubmit="return StartRolls();">
+<ul>
+	<li>
+		<input type="text" name="n" value="1" size="3">
+		d <input type="text" name="s" value="12" size="3">
+	</li>
+	
+	<li>
+		success: 
+		<input type="text" name="success" id="success" value="7" size="3"> and higher
+		(<span id="successpercent">50</span>%)
+	</li>
+	<li>
+		re-roll on: <input type="text" name="reroll" id="reroll" value="12" size="3"> and higher
+		(<span id="rerollpercent">8.3</span>%)
+	</li>
+	<li>
+		failure: <span id="failure">5</span> and less (<span id="failurepercent">50</span>%)
+	</li>
+	<li>
+		botch on: <input type="text" name="botch" id="botch" value="1" size="3"> and lower
+		(<span id="botchpercent">8.3</span>%)
+	</li>
+	<li>
+		iterations: <input type="text" name="iterations" id="iterations" value="100" size="7">
+	</li>
+</ul>
+	 <input type="submit" value=" Roll " />
+</form>
+
+<div id="summaryoutcome">
+
+</div>
+
+
+
+</body>
+</html>

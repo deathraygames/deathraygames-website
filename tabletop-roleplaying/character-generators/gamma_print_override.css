@@ -1,0 +1,34 @@
+
+body {
+    background: white;
+}
+
+#intro {
+	display: none;
+	}
+
+#todo {
+	display: none;
+	}
+
+#footer {
+	display: none;
+}
+
+
+
+
+#charactersheet {
+	width: 100%;
+	padding: 0px;
+	border: none;
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	font-size: 12px;
+
+}
+
+#sheetfooter {
+	display: block;
+}
