@@ -3,7 +3,7 @@ body {
 	background-color: #333;
 	font-family: Trebuchet MS; font-size:16px;
 	margin: 0; padding: 0;
-	font-size: 18px;
+	font-size: 16px;
 	background: -webkit-linear-gradient(top, #343399, #333) fixed;
 }
 h1, h2, h3, h4 {
@@ -11,10 +11,10 @@ h1, h2, h3, h4 {
 	clear: both;
 }
 
-h2 {
+h1 {
 	padding-top: 3em;
 }
-	h2.first {
+	h1.first {
 		padding-top: 0;
 		width: 80%;
 		float: left;
@@ -31,13 +31,14 @@ a:hover {
 }
 
 #logoHeader {
-	height: 180px;
 	text-align: center;
 	/* background: #343399; */
 	margin: 0; padding: 0;
 	/* box-shadow: inset 0 0 80px black; */
 	overflow: hidden;
 	position: relative;
+	animation: animate-fade ease 1s;
+	animation-fill-mode: backwards;
 }
 #logoHeader h1 { display: none; }
 #logoHeader img {
@@ -66,9 +67,17 @@ a:hover {
 	box-shadow: 1px 2px 20px black; ;
 	border-radius: 1em;
 	font-size: 110%;
+	animation-duration: 0.3s;
+	animation-name: animate-arrive;
+	animation-timing-function: ease;
+	animation-delay: 0.15s;
+	animation-fill-mode: backwards;
 }
 
-
+.intro {
+	padding: 0;
+	margin: 0 0 1em 0;
+}
 
 ul.socialLinks {
 	margin: 0; padding: 0;
@@ -99,13 +108,16 @@ ul.socialLinks {
 	}
 .credits {
 	width: 50%;
-	margin: 1em auto;
+	margin: 9vh auto;
 	display: block;
 	text-align: center;
+	color: white;
 }
 img.logo {
-	float: right;
-	width: 3em; height: 3em;
+	float: left;
+	width: 3em;
+	height: 3em;
+	padding: 0 1em 1em 0;
 }
 
 /* For modern browsers */
@@ -127,6 +139,8 @@ img.logo {
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	animation: animate-fade ease 1.5s;
+	animation-fill-mode: backwards;
 }
 .gameList > li {
 	display: block;
@@ -215,7 +229,7 @@ img.logo {
 .gameList li.pkt { 	background-image: url('../images/games/pocketropolis.png'); }
 .gameList li.rp { 	background-image: url('../images/games/rep_prez.png'); }
 .gameList li.cbcn { background-image: url('../play-online/cobold-console/images/omicron_screenshot.png'); }
-.gameList li.exa { 	background-image: url('http://ludumdare.com/compo/wp-content/compo2/thumb/ff1d19c1dde1e0a091c3596265ebc918.jpg'); }
+.gameList li.exa { 	background-image: url(''); }
 .gameList li.shg {	background-image: url('../images/games/glitch.png'); }
 .gameList li.ai { 	background-image: url('../images/games/arcane.png'); }
 .gameList li.eb { 	background-image: url('../images/games/exo-bot.png'); }
@@ -246,6 +260,11 @@ img.logo {
 	border: solid 1px red;
 }
 */
+
+footer {
+	animation: animate-fade ease 1s;
+	animation-fill-mode: backwards;
+}
 
 .otherLinks {
 	clear: both;
@@ -279,7 +298,8 @@ img.logo {
 @media (max-width: 800px) {
 	.bodyContainer {
 		width: auto;
-		border-left: 0; border-right: 0;
+		border: 0;
+		border-radius: 0;
 	}
 }
 @media (max-width: 700px) {
@@ -300,4 +320,28 @@ img.logo {
 		font-size: 160%;
 	}
 }
-*/		
+*/
+
+@keyframes animate-fade {
+	0% {
+		opacity: 0;
+		/* transform: scale(0.5); */
+	}
+	100% {
+		opacity: 1;
+		/* transform: scale(1); */
+	}
+}
+
+@keyframes animate-arrive {
+	0% {
+		opacity: 0;
+		transform: scale(0.95);
+		max-height: 0;
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+		max-height: 100%;
+	}
+}
