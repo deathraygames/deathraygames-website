@@ -1,0 +1,126 @@
+
+	BODY {	text-align: center; padding: 0px; margin: 0px;
+		background-color: #CCC; background-image: url('images/background880.gif'); 
+		background-position: center top; background-repeat: repeat-y;
+		font-family:Trebuchet MS; font-size:14px;
+ 		}
+
+	A	{ 	color: #339; outline: none; }
+	A:visited { 	color: #44A }
+	A:hover {	color: red }
+
+	IMG {	border-width: 0px }
+
+	LABEL { width: 12em; }
+
+	TABLE TH { padding: 0.5em; background: #ddccaa; }
+	TABLE TD { padding: 0.1em; border-bottom: solid 1px #cccccc; }
+
+
+/* Header / Menu / Main page styles */
+
+	#mainhead {	width: 880px; margin: 0px auto; padding: 0px; background: #339; }
+
+	#mainpagetop { 		width: 880px; height: 180px; 
+					background-image: url('images/deathray_logobanner.jpg');
+					border-bottom: white solid 1px }
+
+	#mainpagetopclick { 		display: block; width: 550px; height: 180px; }
+
+	#topbar { 		height: 38px; width: 880px; border-bottom: white solid 1px;
+				color: #339; background: black; 
+				font-size: 15px; }
+			
+	#topbar .menuside { 		float: right; margin-right: 1em;
+					font-size: 12px;  }
+	#topbar .menuside LI {	display: block; float: right;
+					padding: 7px 1em 7px 0em }
+			
+	#topbar UL { 			padding: 0px; margin: 0px; }
+	#mainmenu LI { 		display: block; float: left; 
+					border-right: solid 1px #339;
+			}
+	#mainmenu LI A { 		display: block; 
+					height: 20px; padding: 9px 2em; 
+					font-weight: bold; text-decoration: none;
+					 }
+					
+	#topbar A {			color: #339 }
+	#topbar A:visited {	}
+	#topbar A:hover { 		color: red }
+	#topbar A:active {		background: red; color: black; }
+
+	#mainpage { 	width: 820px; height: 100%; margin: 0px auto; padding: 1em 30px 6em 30px;
+			background: white; text-align: left }
+
+	#mainfooter { 		width: 880px; padding: 1em 0px; margin: 0px auto;
+				background: black; color: #339;
+				clear: both;
+				}
+	#mainfooter A {		color: #339 }
+
+	.menutooltip {	display: none; position: absolute; top: 40px;
+				height: 100px; width: 150px; padding: 20px 10px 20px 10px; border-bottom: solid 1px white;
+				background: black; opacity: 0.8; 
+				color: white; font-size: 14px }
+	.side {		margin-left: -75px; }
+
+
+/* HOME PAGE */
+
+	#newsbox {	
+		width: 420px; padding: 0em 40px 1em 40px;
+		-moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em;
+		background: black; color: white;
+		}
+	#newsbox H1 {	color: red }
+
+
+
+/* PAGES - SIDEBAR and ADVERTISING */
+
+
+	.sidebar 	{ 	float: right; width: 240px; margin: 1em 0em 5em 1.5em;  
+				}
+	.sidebar .submenu {	border: dotted 3px #339; padding: 1em 1em 2em 1em;
+				-moz-border-radius: 1em; -webkit-border-radius: 1em; border-radius: 1em;
+				background: #E0e0e0; }
+	.sidebar .adbox	{
+				color: #AAA; text-align: center; margin-top: 2em;
+				font-weight: bold; font-decoration: italics }
+	.adbox .wideskyscraper {	width: 160px; height: 600px; margin: 0px auto;
+					background: #DDD;  }
+
+/* REVIEWS */
+	
+	UL.reviewlist {	}
+	
+	UL.reviewlist LI {	display: block; 
+				border-bottom: solid 1px #999999;; margin-bottom: 2em;
+		}
+
+	DIV.gamepreview {	width: 120px; height: 80px; border: solid 1px white; margin: 0px 2em 1em 0px;
+				float: left;
+				overflow: hidden; 
+				}
+
+	IMG.gamepreview { 	width: 120px; 
+				}
+
+	IMG.reviewimage {	float: right; margin: 0px 0px 1.5em 1.5em }
+
+
+	.articletitle {		display: inline; font-size: 120%; font-weight: bold 
+				}
+				
+	.author {		color: #999999; }
+
+/* PLAY GAMES */
+
+	UL.gamelist { 		padding: 0px; margin: 0px 0px 0px 10px; }
+	UL.gamelist LI {	display: block; float: left;
+				margin: 0px 10px; padding:  5px 5px 10px 5px;
+				background: white;
+				}
+
+

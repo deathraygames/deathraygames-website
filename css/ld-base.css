@@ -1,0 +1,49 @@
+body { 
+	background-color: #333;
+	font-family:Trebuchet MS; font-size:16px;
+}
+body > div {
+	width: 60%; margin: 1em auto;
+	border: solid 20px #ddd;
+	background-color: #eee;
+	padding: 1em 5% 3em 5%;
+	box-shadow: 1px 2px 20px black;
+	border-radius: 1em;
+
+}
+body > div > hgroup > h2 {
+	font-size: 90%; 
+	font-style: italic;
+}
+a.mainButton {
+	padding: 1em; margin: 1em; display: block;
+	border: solid 1px white;
+	font-size: larger;
+	text-align: center;
+	letter-spacing: 0.25em;
+	line-height: 2em;
+	background-color: #ddd;
+	border-radius: 0.7em;
+	text-decoration: none;
+}
+a.mainButton:hover {
+	background-color: #ccc;
+	border-color: #bbb;
+}
+.credits {
+	width: 50%;
+	margin: 1em auto;
+	display: block;
+	text-align: center;
+}
+.credits a {
+	color: black;
+}
+img.logo {
+	float: right;
+}
+@media (max-width: 900px) {
+	body > div {
+		width: 90%;
+	}
+}
