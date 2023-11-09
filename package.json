@@ -1,16 +1,21 @@
 {
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "rollup": "^4.3.0",
+    "rollup-plugin-copy": "^3.5.0"
   },
   "name": "deathraygames-website",
   "description": "***The homepage for all deathray games***",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
+    "arcane-incrementalist": "github:deathraygames/arcane-incrementalist"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "http-server"
+    "serve": "http-server",
+    "build": "rollup --config rollup.config.js"
   },
   "repository": {
     "type": "git",
