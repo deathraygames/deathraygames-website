@@ -1,0 +1,37 @@
+.nav > ol {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+	text-align: center;
+}
+.nav > ol > li {
+	padding: 0;
+	margin: 0;
+	display: inline-block;
+	box-sizing: border-box;
+	max-width: 25%;	
+	min-width: 4em;
+}
+.nav > ol > li.close {
+	min-width: 1em;
+}
+.nav > ol a {
+	display: block;
+	box-sizing: border-box;
+	width: 100%;
+	padding: 1em 1em;
+}
+	.nav > ol a.selected {
+		background-color: rgba(255,255,255,0.3);
+		box-shadow: 0 0 0.5em rgba(0,0,0,0.2);
+	}
+
+.tabs > div {
+	display: none;
+}
+	.tabs > div.selected {
+
+		display: block;
+	}

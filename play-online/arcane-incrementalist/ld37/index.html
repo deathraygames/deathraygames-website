@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>LD37</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/tabs.css" />
+	<link rel="stylesheet" href="styles/magic_circle.css" />
+	<link href="https://fonts.googleapis.com/css?family=Della+Respira|IM+Fell+DW+Pica|IM+Fell+English+SC|Ruslan+Display" rel="stylesheet">
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+
+<header>
+	<h1>Arcane Incrementalist
+		<span class="version">v0.5.0 (LD37)</span>
+		<a href="../">newer version -&gt;</a>
+	</h1>
+</header>
+
+<div id="booting-up-rocket-boots">
+	<h1>Booting Up RocketBoots Framework</h1>
+	<p>Please wait...</p>
+</div>
+<div class="state boot">
+	Booting Up Game...
+</div>	
+<div class="state preload">
+	Preloading Content...
+</div>
+
+<div id="game" class="state game">
+	<section id="room">
+		<div id="back-wall" class="wall"></div>
+		<div id="left-wall" class="wall"></div>
+		<div id="right-wall" class="wall"></div>
+		<div id="floor" class="wall"></div>
+		<div id="circle">
+		</div>
+		<div id="monster">
+		</div>
+		<div id="cultist">
+		</div>
+		<div id="extras">
+		</div>
+		<div class="stats">
+			<span>Forbidden Knowledge:</span>
+			<span id="forbiddenKnowledge"></span>
+			<span>Sanity:</span>
+			<span id="sanity"></span>
+		</div>		
+	</section>
+	<section class="nav">
+		<ol>
+			<li><a href="#monsters" class="monsters">Conjure</a></li
+			><li><a href="#grimoires" class="grimoires">Grimoires</a><!--</li
+			><li><a href="#extras" class="extras">Extras</a></li
+			><li><a href="#info" class="info">Info</a></li>-->
+		</ol>
+	</section>
+	<section class="tabs">
+		<div class="info">
+			LIST OF STATS,
+			RECENT NEWS,
+			SAVE INFO
+		</div>
+		<div class="monsters">
+			<p>
+				Using mystical evocation you can call spirits and demons
+				into the physical realm and bind them within your magic circle.
+				More powerful entities will provide more forbidden knowledge, but
+				will increase your chance of madness.
+			</p>
+			<ol class="inc"></ol>
+		</div>
+		<div class="grimoires">
+			<p>
+				Books for saving knowledge are essential to all professional magicians. 
+				<!--If you go insane it will be easier
+				to regain the knowledge later using these magical tomes.-->
+			</p>
+			<ol class="inc"></ol>
+		</div>
+		<div class="extras">
+			<ol class="inc"></ol>
+		</div>
+	</section>
+
+
+</div>
+
+<footer>
+	<p class="credits">
+		Handcrafted by Luke <a href="https://twitter.com/deathraygames" target="_blank" title="Go to the deathraygame twitter page">@deathraygames</a> 
+		for <a href="http://ludumdare.com/" target="_blank">Ludum Dare</a> 37, a 72-hour game jam, with the theme of One Room.
+		<br />
+		Uses the RocketBoots web game kit, jQuery, Lodash, Mustache, Google Fonts, and a few images from Wikimedia Commons;
+		everything else is original and &copy; 2016.
+		<br />
+		Code is open source, released under the MIT license, and available on GitHub.
+	</p>
+	<p>
+		<a href="https://iamdivider.bandcamp.com/album/warp-and-weft" target="_blank">
+		Recommended music to listen to while playing</a>
+	</p>
+	<p class="links">
+		<a href="http://deathraygames.tumblr.com/" target="_blank">Tumblr</a> 
+		<a href="https://twitter.com/deathraygames" target="_blank">Twitter</a>
+		<a href="https://www.facebook.com/deathraygames/" target="_blank">Facebook</a>
+		<a href="https://www.reddit.com/r/deathraygames" target="_blank">Reddit</a>
+		<a href="https://github.com/deathraygames/" target="_blank">GitHub</a>
+		<a href="http://deathraygames.com/" target="_blank">DeathrayGames.com</a>
+		<a href="https://www.reddit.com/r/incremental_games" target="_blank">incremental_games subreddit</a>
+	</p>
+</footer>
+
+
+<div class="templates scripts">
+	<script type="text/template" id="statsTemplate">
+		
+	</script>
+	<script type="text/template" id="monstersTemplate">
+		<li data-index="{{index}}" class="{{lockedClass}}">
+			<span class="count"></span>
+			<span class="displayName">{{displayName}}</span>
+			{{#isConjured}}
+				<span class="conjured">(Conjured)</span>
+			{{/isConjured}}
+			{{#cost}}
+				<button type="button" class="buy">Unlock for {{cost}}</button>
+			{{/cost}}
+			{{#count}}
+				<button type="button" class="summon">Conjure</button>
+			{{/count}}
+			{{#isConjured}}
+				<button type="button" class="banish">Banish</button>
+			{{/isConjured}}
+			<div class="details">{{details}}</div>
+		</li>
+	</script>
+	<script type="text/template" id="grimoiresTemplate">
+		<li data-index="{{index}}" class="{{lockedClass}}">
+			<span class="count">{{count}}</span>
+			<span class="displayName">{{displayName}}</span>
+
+			{{#cost}}
+				<button type="button" class="buy">Buy for {{cost}}</button>
+			{{/cost}}
+			<span class="bonus">+{{forbiddenKnowledgeMax}} to max knowledge</span>
+			<div class="details">{{details}}</div>
+		</li>
+	</script>
+	<script type="text/template" id="extrasTemplate">
+		<li data-index="{{index}}" class="{{lockedClass}}">
+			<span class="count">{{count}}</span>
+			<span class="displayName">{{displayName}}</span>
+			{{#cost}}
+				<button type="button" class="buy">Buy for {{cost}}</button>
+			{{/cost}}
+			<div class="details">{{details}}</div>
+		</li>
+	</script>
+</div>
+<div class="scripts">
+	<script src="scripts/libs/mustache.js"></script>
+	<script src="scripts/rocketboots/core.js"></script>
+	<script src="scripts/evocatio.js"></script>
+	<script src="../../../js/ga.js"></script>
+</div>
+
+</body>
+</html>

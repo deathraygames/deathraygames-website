@@ -1,0 +1,409 @@
+body {
+	background-color: #a9a9a0;
+	color: #333;
+	padding: 0;
+	margin: 0;
+	font-family: 'IM Fell DW Pica', serif;
+	font-size: calc(12px + 1vmin);
+	height: 100%;
+	width: 100%;
+/*
+font-family: 'Ruslan Display', cursive;
+font-family: 'IM Fell English SC', serif;
+font-family: 'Della Respira', serif;
+font-family: 'IM Fell DW Pica', serif;
+*/
+}
+
+button {
+	font-size: 100%;
+	display: inline-block;
+	border: 0;
+	background-color: rgba(0,0,0,0.4);
+	color: white;
+	border-radius: 0.2em;
+	padding: 0.25em 1em;
+	cursor: pointer;
+	font-family: 'IM Fell English SC', serif;
+	outline: none;
+}
+button:active {
+	background-color: rgba(0,0,0,0.3);
+}
+
+a {
+	text-decoration: none;
+	color: #337;
+}
+	a:hover {
+		color: #009;
+		background: rgba(255,255,255,0.1);
+	}
+
+.scripts {
+	display: none;
+}
+
+body > * {
+	/* max-width: 800px; 
+	margin: 0 auto;
+	text-align: left;
+	*/
+}
+
+header {
+	margin: 0 2%;
+}
+	header h1 {
+		font-family: 'IM Fell English SC', serif;
+	}
+	header .version {
+		display: inline-block;
+		margin-left: 1em;
+		color: rgba(0,0,0,0.3);
+		font-size: calc(50% + 1vmin);
+	}
+
+
+.state {
+	display: none;
+}
+
+.nav {
+	font-family: 'IM Fell English SC', serif;
+	font-size: 130%;
+	background-color: /*rgba(0,0,0,0.1)*/ rgba(255,255,255,0.1);
+}
+.nav a {
+	color: #333;
+}
+
+.nav {
+	width: 100%;
+}
+
+.tabs {
+	overflow: auto;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start; /* align items in Main Axis */
+	align-items: stretch; /* align items in Cross Axis */
+	align-content: stretch; /* Extra space in Cross Axis */
+}
+	.tabs p {
+		margin: 1em;
+	}
+
+.controls {
+	min-width: 20em;
+	width: 100%;
+	height: 100%;
+	background-color: /* #a9a9a0 */ rgba(169,169,160,0.9);
+
+	display: flex;
+	flex-direction: column;
+	
+	justify-content: flex-start; /* align items in Main Axis */
+	align-items: stretch; /* align items in Cross Axis */
+	align-content: stretch; /* Extra space in Cross Axis */
+
+	box-shadow: 0 0 1em rgba(0,0,0,0.1);
+}
+
+
+#game {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around;
+}
+	#game.insane {
+		background-color: rgba(255,0,0,0.05);
+		box-shadow: 0 0 5em rgba(255,0,0,0.3);
+	}
+
+#room {
+	box-sizing: border-box;
+	width: 100vw;
+	max-width: 800px;
+	margin: 0 2vw;
+	height: 60vw;
+	max-height: 500px;
+	min-height: 100px;
+	border: solid 1px rgba(0,0,0,0.2);
+	float: left;
+	position: relative;
+	box-shadow: inset 0 0 10em rgba(0,0,0,0.1);
+	--base-room-unit: 200px + 1.1vw;
+	/*
+		x = left/right
+		y = up/down
+		z = to/from the camera
+	*/
+	--wall-size: calc(var(--base-room-unit) * 37);
+	--wall-y: calc(var(--wall-size) * -.4);
+	--wall-z: calc(var(--wall-size) / -2);
+	--floor-y: calc(var(--wall-y) * .25);
+	--floor-z: calc(var(--wall-z) * 0);
+	--circle-size: calc(var(--wall-size) * 1);
+	--circle-x: calc(var(--wall-size) - (var(--circle-size) * 1));
+	--circle-y: calc(var(--floor-y) * 1);
+	--circle-z: calc(var(--circle-size) * 0);
+	perspective: calc(var(--base-room-unit) * 20); /* 800px; */
+	perspective-origin: 50% 20%;
+	overflow: hidden;
+	transition: .3s all ease-in-out;
+	border: solid 1px rgba(0,0,0,0.5);
+}
+	#room:hover {
+		perspective-origin: 52% 22%;
+	}
+	#room > div {
+		position: absolute;
+		transform-style: preserve-3d;
+		display: none;
+		transition: 0.3s all ease-in-out;
+		background-size: 100% 100%;
+		background-repeat: no-repeat;
+	}
+	#room .curr {
+		display: block;
+		padding: 0 1em;
+	}
+
+
+.stats {
+	padding: 1em;
+	top: -2%;
+	left: 2%;
+	border-radius: 1em;
+	text-align: left;
+	/*
+	background-color: rgba(255,255,255,0.2);
+	box-shadow: 0 1em 0.5em rgba(0,0,0,0.1);
+	*/
+}
+.curr {
+	display: block;
+}
+
+.forbiddenKnowledgeLabel, 
+#forbiddenKnowledge {
+	color: #434;
+}
+.sanityLabel,
+#sanity {
+	display: inline-block;
+	color: #343;
+}
+.currency-val {
+	font-size: 250%;
+	min-width: 3em;
+	display: inline-block;
+	text-align: right;
+}
+.currency-out-of {
+	display: inline-block;
+	font-size: 150%;
+	margin: 0 0.5em;
+}
+.currency-max {
+	font-size: 150%;
+}
+.currency-rate {
+	font-size: 200%;
+}
+
+.wall {
+	top: 0;
+	left: 0;
+	width: var(--wall-size);
+	height: var(--wall-size);
+	background-color: rgba(0,0,0,0.1);
+	border: solid 1px black;
+	display: block;
+	box-shadow: inset 0 0 50vmin rgba(0,0,0,0.5);
+}
+	#back-wall {
+		transform: rotateY(0deg) translateX(0) translateY(var(--wall-y)) translateZ(var(--wall-z));
+	}
+	#left-wall {
+		transform: rotateY(90deg) translateX(0) translateY(var(--wall-y)) translateZ(var(--wall-z));
+	} 
+	#right-wall {
+		transform: rotateY(-90deg) translateX(0) translateY(var(--wall-y)) translateZ(var(--wall-z));
+	}
+	#floor {
+		background-color: rgba(0,0,0,0.15);
+		transform: rotateX(90deg) translateX(0) translateY(var(--floor-z)) translateZ(var(--floor-y));
+	}
+
+#circle {
+	width: var(--circle-size);
+	height: var(--circle-size);
+	/* border-radius: 100%; */
+	border: solid 4px rgba(0,0,0,0.1);
+	cursor: pointer;
+	transform: rotateX(90deg) translateX(var(--circle-x)) translateY(var(--circle-z)) translateZ(var(--circle-y));
+	background-image: url('../images/circle.png');
+	box-shadow: 0 0 1em rgba(0,0,0,0.1)
+}
+#monster {
+	--monster-size: calc(var(--base-room-unit) * 15);
+	top: 0%;
+	left: 10%;
+	height: calc(var(--monster-size) * 1.125);
+	width: var(--monster-size);
+	/* background-color: rgba(0,0,0,0.1); */
+	cursor: pointer;
+	transition: 2s all ease-in-out;
+	transform: rotateX(-20deg) rotateY(32deg);
+}
+	#monster[data-cycle="0"] {
+		
+	}
+	#monster[data-cycle="1"] {
+		transform: rotateX(-19deg) rotateY(30deg) translateY(0px);
+	}
+	#monster[data-cycle="2"] {
+		transform: rotateX(-18deg) rotateY(30deg) translateY(20px);
+	}
+	#monster[data-cycle="3"] {
+		transform: rotateX(-19deg) rotateY(31deg) translateY(-10px);
+	}
+	#monster:hover {
+		transform: rotateX(-20deg) rotateY(0deg);
+	}
+	#monster:active {
+		transform: rotateX(0deg) rotateY(0deg);
+	}
+
+#cultist {
+	bottom: 0px;
+	right: 0;
+	/* height/width ratio of 1.5 */
+	--cultist-size: calc(25vmin + 10px);
+	height: calc(var(--cultist-size) * 1.5);
+	width: var(--cultist-size);
+	/* background-color: rgba(0,0,0,0.1); */
+	--cultist-x: calc(-10px - 10vw);
+	transform: rotateY(-10deg) translateX(var(--cultist-x)) translateY(0px) translateZ(-0vmin);
+	background-image: url('../images/cultist_1.png');
+	background-size: 120% 110%;
+	background-position: 50% 50%;
+	cursor: pointer;
+}
+	#cultist:hover {
+		transform: rotateY(0deg) translateX(var(--cultist-x)) translateY(0px) translateZ(-5vmin);		
+	}
+	#cultist.insane {
+		background-image: url('../images/cultist_insane.png');
+	}
+
+
+.tabs > div {
+	width: 100%;
+}
+.nav > ol a {
+	padding: 1.4em calc(1vmin);
+}
+
+
+ol.inc {
+	display: block;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+	ol.inc > li {
+		display: block;
+		box-sizing: border-box;
+		padding: 1em;
+		margin: 1em 0em;
+		width: 100%;
+		border-bottom: solid 1px rgba(0,0,0,0.1);
+		background-color: rgba(255,255,255,0.1);
+		box-shadow: 0 0.25em 0.75em rgba(0,0,0,0.2);
+	}
+	ol.inc > li:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+		ol.inc > li .count {
+			display: block;
+			float: left;
+			min-width: 1em;
+			height: 1em;
+			padding: 0.1em 0.2em;
+			margin: 0 1em 0 0;
+			border: solid 1px rgba(0,0,0,0.1);
+			font-size: 120%;
+			text-align: center;
+		}
+	ol.inc > li.locked {
+		opacity: 0.9;
+		background: none;
+		box-shadow: none;
+	}
+		ol.inc > li.locked .count {
+			/* background: ; */
+		}
+
+	ol.inc button {
+		float: right;
+		margin: 0 0 0 1em;
+		min-width: 10em;
+		box-shadow: 0 0.25em 0 rgba(0,0,0,0.6);
+	}
+	ol.inc .details {
+		display: none;
+	}
+	ol.inc > li.expanded .details {
+		display: block;
+	}
+
+.displayName {
+	float: left;
+}
+
+.bonus {
+	display: block;
+	font-size: 80%;
+	margin: 0.5em 0 0 4em;
+	clear: left;
+	float: left;
+}
+
+ol.inc .cannotAfford button {
+	background-color: rgba(0,0,0,0.2);
+	box-shadow: none;
+}
+
+button.summon,
+button.banish,
+ol.inc button.summon,
+ol.inc button.banish {
+	background-color: rgba(10,0,20,0.4);;
+}
+.conjured {
+	color: #436;
+}
+
+.tabs h3 {
+	margin-left: 1em;
+}
+
+
+
+footer {
+	clear: both;
+	padding: 2em 30vw 0 30vw;
+	font-size: 80%;
+	text-align: center;
+}
+	.links > a {
+		display: inline-block;
+		padding: 0.5em 0.5em;
+	}
