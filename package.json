@@ -10,6 +10,7 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "404-js13k-2020": "github:deathraygames/404-js13k-2020",
     "arcane-incrementalist": "github:deathraygames/arcane-incrementalist"
   },
   "scripts": {

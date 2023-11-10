@@ -1,4 +1,5 @@
 const games = [
-	'arcane-incrementalist'
+    '404-js13k-2020',
+	'arcane-incrementalist',
 ];
 export default games;
